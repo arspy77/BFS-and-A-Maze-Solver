@@ -28,6 +28,8 @@ class Labyrinth:
 
     def AStar(self):
         q = queue.PriorityQueue()
+        self.expandNodeList = []
+        self.path = []
         costSoFar = 0
         distanceToGoal = abs(self.goal[0] - self.start[0]) + abs(self.goal[1] - self.start[1])
         q.put((costSoFar + distanceToGoal, [self.start]))
@@ -35,12 +37,12 @@ class Labyrinth:
         while not goalReached:
             path = q.get()[1]
             node = path[-1]
-
+            self.expandNodeList.append(node)
             if node == self.goal:
                 goalReached = True
                 self.path = path
             else:
-                costSoFar = len(path) - 1
+                costSoFar = len(path)
                 #Kanan
                 if (node[1] < len(self.map[0]) - 1):
                     if (self.map[node[0]][node[1]+1] == 0) and not [node[0], node[1]+1] in path:
@@ -78,10 +80,13 @@ class Labyrinth:
     def BFS(self):
         q = queue.Queue()
         q.put([self.start])
+        self.expandNodeList = []
+        self.path = []
         goalReached = False
         while not goalReached:
             path = q.get()
             node = path[-1]
+            self.expandNodeList.append(node)
 
             if node == self.goal:
                 goalReached = True
@@ -119,9 +124,10 @@ class Labyrinth:
         plt.close()
         tempMap = self.map.copy()
         try:
+            for expandNode in self.expandNodeList:
+                tempMap[expandNode[0]][expandNode[1]] = 5
             for tile in self.path:
                 tempMap[tile[0]][tile[1]] = 2
-            self.path = []
         except AttributeError:
             pass
 
@@ -131,7 +137,8 @@ class Labyrinth:
                     [0, 0, 0],
                     [0, 0, 255],
                     [255,0,0],
-                    [0,255,0]])
+                    [0,255,0],
+                    [255,0,255]])
         plt.imshow(palette[tempMap])
         plt.axis("off")
         plt.show(False)
