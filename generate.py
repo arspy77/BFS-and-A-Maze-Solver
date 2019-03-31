@@ -1,6 +1,6 @@
 import random
 n =  int(input("Masukan n : "))
-f = open("hehe.txt", "w+")
+f = open("maze.txt", "w+")
 for i in range(n):
     for j in range(n):
         r = random.randint(1,5)
