@@ -16,52 +16,17 @@ class Labyrinth:
     
     def AStar(self):
         q = queue.PriorityQueue()
-        costSoFar = 0
-        distanceToGoal = abs(self.goal[0] - self.start[0]) + abs(self.goal[1] - self.start[1])
-        q.put((costSoFar + distanceToGoal, self.start))
-        path = []
-        goalReached = False
-        while not goalReached:
-            print(path)
-            node = q.get()[1]
-            path.append(node)
-            
-            if node == self.goal:
-                goalReached = True
-                self.path = path
-            else:
-                costSoFar += 1
-                q.queue.clear()
-                if (node[0] > 0):
-                    if (self.map[node[0]-1][node[1]] == 0) and not [node[0]-1, node[1]] in path:
-                        optionalNode = [node[0]-1,node[1]]
-                        distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
-                        q.put((costSoFar + distanceToGoal, optionalNode))
-
-                if (node[0] < len(self.map) - 1):
-                    if (self.map[node[0]+1][node[1]] == 0) and not [node[0]+1, node[1]] in path:
-                        optionalNode = [node[0]+1, node[1]]
-                        distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
-                        q.put((costSoFar + distanceToGoal, optionalNode))
-                
-                if (node[1] > 0):
-                    if (self.map[node[0]][node[1]-1] == 0) and not [node[0], node[1]-1] in path:
-                        optionalNode = [node[0], node[1] - 1]
-                        distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
-                        q.put((costSoFar + distanceToGoal, optionalNode))
-                if (node[1] < len(self.map[0]) - 1):
-                    if (self.map[node[0]][node[1]+1] == 0) and not [node[0], node[1]+1] in path:
-                        optionalNode = [node[0], node[1] + 1]
-                        distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
-                        q.put((costSoFar + distanceToGoal, optionalNode))
 
     def BFS(self):
         q = queue.Queue()
         q.put([self.start])
         goalReached = False
         while not goalReached:
+
             path = q.get()
+
             node = path[-1]
+            # print(node)
 
             if node == self.goal:
                 goalReached = True
