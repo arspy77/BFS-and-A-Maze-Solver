@@ -41,22 +41,7 @@ class Labyrinth:
                 self.path = path
             else:
                 costSoFar = abs(node[0] - self.start[0]) + abs(node[1] - self.start[1])
-                if (node[0] > 0):
-                    if (self.map[node[0]-1][node[1]] == 0) and not [node[0]-1, node[1]] in path:
-                        optionalNode = [node[0]-1,node[1]]
-                        newPath = list(path)
-                        newPath.append(optionalNode)
-                        distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
-                        q.put((costSoFar + distanceToGoal, newPath))
-
-                if (node[0] < len(self.map) - 1):
-                    if (self.map[node[0]+1][node[1]] == 0) and not [node[0]+1, node[1]] in path:
-                        optionalNode = [node[0]+1, node[1]]
-                        newPath = list(path)
-                        newPath.append(optionalNode)
-                        distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
-                        q.put((costSoFar + distanceToGoal, newPath))
-                
+                #Kanan
                 if (node[1] > 0):
                     if (self.map[node[0]][node[1]-1] == 0) and not [node[0], node[1]-1] in path:
                         optionalNode = [node[0], node[1] - 1]
@@ -64,7 +49,23 @@ class Labyrinth:
                         newPath.append(optionalNode)
                         distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
                         q.put((costSoFar + distanceToGoal, newPath))
-
+                #Bawah
+                if (node[0] < len(self.map) - 1):
+                    if (self.map[node[0]+1][node[1]] == 0) and not [node[0]+1, node[1]] in path:
+                        optionalNode = [node[0]+1, node[1]]
+                        newPath = list(path)
+                        newPath.append(optionalNode)
+                        distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
+                        q.put((costSoFar + distanceToGoal, newPath))
+                # Atas
+                if (node[0] > 0):
+                    if (self.map[node[0]-1][node[1]] == 0) and not [node[0]-1, node[1]] in path:
+                        optionalNode = [node[0]-1,node[1]]
+                        newPath = list(path)
+                        newPath.append(optionalNode)
+                        distanceToGoal = abs(self.goal[0] - optionalNode[0]) + abs(self.goal[1] - optionalNode[1])
+                        q.put((costSoFar + distanceToGoal, newPath))
+                #Kiri
                 if (node[1] < len(self.map[0]) - 1):
                     if (self.map[node[0]][node[1]+1] == 0) and not [node[0], node[1]+1] in path:
                         optionalNode = [node[0], node[1] + 1]
@@ -141,7 +142,6 @@ if __name__ == "__main__":
 
     L = Labyrinth(filename)
     start = list(map(int, input("Input Start = ").split(" ")))
-    print(start)
     while not L.validateNode(start):
         print("Error, your input cannot choose as start node")
         start = list(map(int, input("Input Start = ").split(" ")))
