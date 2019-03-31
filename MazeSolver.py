@@ -102,17 +102,21 @@ class Labyrinth:
                         newPath = list(path)
                         newPath.append([node[0], node[1] - 1])
                         q.put(newPath)
+
                 if (node[1] < len(self.map[0]) - 1):
                     if (self.map[node[0]][node[1]+1] == 0) and not [node[0], node[1]+1] in path:
                         newPath = list(path)
                         newPath.append([node[0], node[1] + 1])
                         q.put(newPath)
 
+
     def printMap(self):
-        tempMap = self.map
+        plt.close()
+        tempMap = self.map.copy()
         try:
             for tile in self.path:
                 tempMap[tile[0]][tile[1]] = 2
+            self.path = []
         except AttributeError:
             pass
 
@@ -125,7 +129,7 @@ class Labyrinth:
                     [0,255,0]])
         plt.imshow(palette[tempMap])
         plt.axis("off")
-        plt.show()
+        plt.show(False)
 
 if __name__ == "__main__":
     print("Welcome to Maze Solver")
@@ -146,9 +150,10 @@ if __name__ == "__main__":
         print("Error, your input cannot choose as start node")
         goal = list(map(int, input("Input Goal = ").split(" ")))
     L.setStartAndGoal(start, goal)
-    # L.printMap()
+    L.printMap()
 
     isExit = False
+
     while not isExit:
         print("Choose Method")
         print("1. AStar")
